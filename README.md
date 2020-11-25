@@ -1,7 +1,7 @@
 # This API is under development and not yet functional.
 ## What is it?
 
-_HashTrack_ is an API that lets you track anything on a map with real-time updates. </br>
+**HashTrack** is an API that lets you track anything on a map with real-time updates. </br>
 It can be used by any business delivering a product. </br>
 
 The two key features are:
