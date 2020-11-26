@@ -1,1 +1,3 @@
 node_modules/
+views/cmap.pug
+views/auth.js

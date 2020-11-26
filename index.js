@@ -19,11 +19,14 @@ const db = admin.firestore();
 
 app.set('port', PORT);
 app.set('env', NODE_ENV);
+app.set('view engine', 'pug')
 
 
-// Handling map requests for the delivery person
-app.get('/api/v1/:id/d', (req, res) => {
-    res.sendFile(__dirname + '/dmap.html')
+
+// Handling map requests for the client
+app.get('/api/v1/track/:id/c', (req, res) => {
+    //res.sendFile(__dirname + '/dmap.html')
+    res.render('cmap', {eventid: req.params.id})
 })
 
 
@@ -49,8 +52,8 @@ app.post('/api/v1/create/:dest/:timeout', async (req, res, next) => {
             });
 
             // Create the link for the delivery person
-            const dlink = 'localhost:3000/api/v1/' + id + '/d'
-            res.send('Delivery: ' + dlink);
+            const link = 'localhost:3000/api/v1/track/' + id
+            res.send('Delivery: ' + link + '/d \nClient: ' + link + '/c');
         }
     } catch (e) {
         next(e);
