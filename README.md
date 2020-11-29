@@ -23,7 +23,7 @@ and `timeout` is the number of hours for the tracking to be active.
 _If you set the `timeout` to **0**, then the tracking will not be deactivated on its own, instead the delivery person must declare the delivery as completed._
 
 ### Response
-If the request is valid, the API will respond with 2 links:
+If the request is valid, the API will respond with 2 links seperated by space:
 * A link that you can send to the client. It contains a map along with a pin marking the delivery person's position, the position will update every 5-10 seconds.
 * A link for the delivery person. When the link is open, the device will broadcast its location for the client to see. It contains a map along with an optimal route for the client's address and a button for declaring the delivery as completed. When the delivery person completes the delivery, he can press the button and the two links will be deactivated. </br></br>
 

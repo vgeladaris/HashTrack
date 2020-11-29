@@ -1,0 +1,50 @@
+html, body, #map {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+
+#id {
+    display: none;
+}
+
+#start {
+    font-size: 50px;
+    height: 150px;
+    width: 100%;
+    bottom: 0%;
+    font-weight: bold;
+    z-index: 10;
+    float: left;
+    position: absolute;
+    background-color: #3db1b8;
+    color: white;
+    border: 3px solid  #3db1b8;
+    border-radius: 3px;
+}
+
+#start:active {
+    background-color: #359196;
+    border: 3px solid #359196;
+}
+
+
+#stop {
+    font-size: 50px;
+    height: 150px;
+    width: 100%;
+    bottom: 0%;
+    font-weight: bold;
+    z-index: 10;
+    float: left;
+    position: absolute;
+    background-color: #55964C;
+    color: white;
+    border: 3px solid #55964C;
+    border-radius: 3px;
+}
+
+#stop:active {
+    background-color: #498840;
+    border: 3px solid #498840;
+}

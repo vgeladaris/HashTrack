@@ -28,6 +28,7 @@
     "express": "^4.17.1",
     "firebase-admin": "^9.4.1",
     "morgan": "^1.10.0",
-    "pug": "^3.0.0"
+    "pug": "^3.0.0",
+    "xmlhttprequest": "^1.8.0"
   }
 }

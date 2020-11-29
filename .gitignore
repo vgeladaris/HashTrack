@@ -1,3 +1,5 @@
 node_modules/
 views/cmap.pug
+views/dmap.pug
 views/auth.js
+geocode.js
