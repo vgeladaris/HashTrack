@@ -1,4 +1,7 @@
-# This API is under development and not yet functional.
+# This API is under development and not yet fully functional.
+
+
+
 ## What is it?
 
 **HashTrack** is an API that lets you track anything on a map with real-time updates. </br>
