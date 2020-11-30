@@ -1,3 +1,4 @@
+const functions = require('firebase-functions');
 const express = require('express');
 const path = require('path');
 const geo = require('./geocode.js');
@@ -6,15 +7,17 @@ const app = express();
 
 
 // Setting server/firebase attributes.
-const PORT = process.env.PORT || 3000;
+//const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const admin = require("firebase-admin");
-const serviceAccount = require("/home/masterofreality/serviceAccountKey.json");
+//const serviceAccount = require("/home/masterofreality/serviceAccountKey.json");
 
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: "https://hashtrackapi.firebaseio.com"
-});
+admin.initializeApp();
+    //{
+    //credential: admin.credential.applicationDefault(),
+    //databaseURL: "https://hashtrackapi.firebaseio.com"
+//}
 
 const db = admin.firestore();
 
@@ -23,16 +26,23 @@ app.set('env', NODE_ENV);
 app.set('view engine', 'pug')
 
 
+// Send index file.
+app.get('', (req, res) => {
+    res.sendFile(path.join(__dirname, "views/index.html"));
+})
+
+
 // Handling map requests for the client.
 app.get('/api/v1/track/:id/c', (req, res) => {
-    res.render('cmap', {eventid: req.params.id})
+    res.render('cmap', {eventid: req.params.id});
 })
 
 
 // Handling map requests for the driver.
 app.get('/api/v1/track/:id/d', (req, res) => {
-    res.render('dmap', {eventid: req.params.id})
+    res.render('dmap', {eventid: req.params.id});
 })
+
 
 // Creating an event.
 app.post('/api/v1/create/:dest/:timeout', async (req, res, next) => {
@@ -55,7 +65,7 @@ app.post('/api/v1/create/:dest/:timeout', async (req, res, next) => {
             // Send request get the client's address' coordinates.
             xhttp.onreadystatechange = async function() {
 
-                if (this.readyState == 4 && this.status == 200) {
+                if (this.readyState === 4 && this.status === 200) {
                     let response = JSON.parse(this.responseText);
 
                     let lat = response.results[0].geometry.location.lat;
@@ -72,14 +82,17 @@ app.post('/api/v1/create/:dest/:timeout', async (req, res, next) => {
                     // Create the link for the delivery person.
                     const link = 'localhost:3000/api/v1/track/' + id
                     res.send(link + '/c ' + link + '/d');
-                };
+                    return;
+                }
             }
 
             xhttp.open("GET", geo.getURL(dest), true);
             xhttp.send();
+            return;
         }
     } catch (e) {
         next(e);
+        return;
     }
 })
 
@@ -102,3 +115,5 @@ function makeId(length){
 app.listen(PORT, () => {
     console.log(`Express Server started on Port ${app.get('port')} | Environment: ${app.get('env')}`);
 });
+
+exports.app = functions.https.onRequest(app);

@@ -1,5 +1,7 @@
-node_modules/
-views/cmap.pug
-views/dmap.pug
-views/auth.js
-geocode.js
+functions/node_modules/
+functions/views/cmap.pug
+functions/views/dmap.pug
+functions/views/auth.js
+functions/geocode.js
+functions/firebase-debug.log
+functions/.eslintrc.json

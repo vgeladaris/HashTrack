@@ -23,29 +23,35 @@ function initMap(){
 
     orderRef.get().then(doc => {
 
-            const destPos = {
-                lat: doc.data().destination.latitude,
-                lng: doc.data().destination.longitude
-            }
+        const destPos = {
+            lat: doc.data().destination.latitude,
+            lng: doc.data().destination.longitude
+        }
 
-            map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 15,
-                center: destPos,
-            });
-
-            const destMarker = new google.maps.Marker({
-                position: destPos,
-                map: map,
-                title: "Your Location",
-                icon: destIcon
-            });
-
-            driverMarker = new google.maps.Marker({
-                position: {lat: 0, lng: 0},
-                title: "Driver",
-                icon: driverIcon
-            });
+        map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 15,
+            center: destPos,
         });
+
+        const destMarker = new google.maps.Marker({
+            position: destPos,
+            map: map,
+            title: "Your Location",
+            icon: destIcon
+        });
+
+        driverMarker = new google.maps.Marker({
+            position: {lat: 0, lng: 0},
+            title: "Driver",
+            icon: driverIcon
+        });
+
+        return;
+
+    }).catch(e => {
+        console.error(e);
+        return;
+    });
 }
 
 function activateOrder(){
@@ -53,29 +59,20 @@ function activateOrder(){
     document.getElementById("start").style.visibility = "hidden";
     document.getElementById("stop").style.visibility = "visible";
 
+
     return orderRef.update({
         active: true
     }).then(() => {
         if(navigator.geolocation){
-            setInterval(() => {
-                navigator.geolocation.getCurrentPosition(updatePos)
-            }, 3000);
+            setInterval(navigator.geolocation.getCurrentPosition(updatePos, (error) => {console.error(error)}, {enableHighAccuracy: true}), 5000);
         }
         else{
-            alert("No Geolocation Support.")
+            console.log("No Geolocation Support.")
         }
+        return;
     });
 }
 
-function completeOrder(){
-    isActive = false;
-    document.getElementById("stop").style.visibility = "hidden";
-
-    return orderRef.update({
-        active: false,
-        completed: true
-    });
-}
 
 function updatePos(position){
     if(!isActive) return;
@@ -85,5 +82,18 @@ function updatePos(position){
     }).then(() => {
         driverMarker.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
         driverMarker.setMap(map);
+
+        return;
+    });
+}
+
+
+function completeOrder(){
+    isActive = false;
+    document.getElementById("stop").style.visibility = "hidden";
+
+    return orderRef.update({
+        active: false,
+        completed: true
     });
 }
