@@ -1,6 +1,6 @@
 # This API is under development and not yet fully functional.
 
-
+![Logo](https://raw.githubusercontent.com/VasileiosGeladaris/HashTrack/main/logo.png)
 
 ## What is it?
 
