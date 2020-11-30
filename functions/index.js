@@ -74,13 +74,14 @@ app.post('/api/v1/create/:dest/:timeout', async (req, res, next) => {
                     // Create record in the DB.
                     await docRef.set({
                         destination: new admin.firestore.GeoPoint(lat, lng),
+                        driver: new admin.firestore.GeoPoint(0, 0),
                         timeout: time,
                         completed: false,
                         active: false
                     });
 
                     // Create the link for the delivery person.
-                    const link = 'localhost:3000/api/v1/track/' + id
+                    const link = 'https://us-central1-hashtrackapi.cloudfunctions.net/app/api/v1/track/' + id
                     res.send(link + '/c ' + link + '/d');
                     return;
                 }

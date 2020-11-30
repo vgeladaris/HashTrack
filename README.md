@@ -14,7 +14,7 @@ The two key features are:
 With every new order about to get delivered, you can send an HTTP POST request to the API with the following format:
 
 ```
-https://hashtrackapi.web.app/api/v1/create/destination/timeout
+https://us-central1-hashtrackapi.cloudfunctions.net/app/api/v1/create/destination/timeout
 ```
 
 Where `destination` is a string of the client's address (e.g. **Vasiliou+Smpokou+1+71306+Heraklion+Greece**) </br>
