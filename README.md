@@ -39,8 +39,8 @@ JSON Response for the example values above:
 }
 
 ```
-</br>
-    _Notes:_
+
+_Notes:_
 * The client's link can be used by multiple devices.
 * The delivery person's link can only be used by the delivery person's device.
 * The link should not be closed at any point during delivery.
