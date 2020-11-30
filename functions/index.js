@@ -80,9 +80,15 @@ app.post('/api/v1/create/:dest/:timeout', async (req, res, next) => {
                         active: false
                     });
 
-                    // Create the link for the delivery person.
                     const link = 'https://us-central1-hashtrackapi.cloudfunctions.net/app/api/v1/track/' + id
-                    res.send(link + '/c ' + link + '/d');
+
+                    var json = {};
+                    json.id = id;
+                    json.clientUrl = link + '/c';
+                    json.driverUrl = link + '/d';
+                    json.timeout = time;
+                    res.json(json);
+
                     return;
                 }
             }

@@ -18,16 +18,29 @@ https://us-central1-hashtrackapi.cloudfunctions.net/app/api/v1/create/destinatio
 ```
 
 Where `destination` is a string of the client's address (e.g. **Vasiliou+Smpokou+1+71306+Heraklion+Greece**) </br>
-and `timeout` is the number of hours for the tracking to be active.
+and `timeout` is the number of hours for the tracking to be active (e.g. **3** hours).
 
 _If you set the `timeout` to **0**, then the tracking will not be deactivated on its own, instead the delivery person must declare the delivery as completed._
 
 ### Response
-If the request is valid, the API will respond with 2 links seperated by space:
-* A link that you can send to the client. It contains a map along with a pin marking the delivery person's position, the position will update every 5-10 seconds.
-* A link for the delivery person. When the link is open, the device will broadcast its location for the client to see. It contains a map along with an optimal route for the client's address and a button for declaring the delivery as completed. When the delivery person completes the delivery, he can press the button and the two links will be deactivated. </br></br>
+If the request is valid, the API will respond with a json file containing:
+* _id_: The order's ID.
+* _clientUrl_: A link that you can send to the client. It contains a map along with a pin marking the delivery person's position, the position will update every 5-10 seconds.
+* _driverUrl_: A link for the delivery person. When the link is open, the device will broadcast its location for the client to see. It contains a map along with an optimal route for the client's address and a button for declaring the delivery as completed. When the delivery person completes the delivery, he can press the button and the two links will be deactivated.
+* _timeout_: The order's timeout value. </br>
 
-_Notes:_
+JSON Response for the example values above:
+```
+{
+    "id": "eFOs8pH9",
+    "clientUrl": "https://us-central1-hashtrackapi.cloudfunctions.net/app/api/v1/track/eFOs8pH9/c",
+    "driverUrl": "https://us-central1-hashtrackapi.cloudfunctions.net/app/api/v1/track/eFOs8pH9/d",
+    "timeout": 3
+}
+
+```
+</br>
+    _Notes:_
 * The client's link can be used by multiple devices.
 * The delivery person's link can only be used by the delivery person's device.
 * The link should not be closed at any point during delivery.
