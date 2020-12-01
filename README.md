@@ -1,7 +1,7 @@
 # This API is under development.
 
 ![Logo](https://raw.githubusercontent.com/VasileiosGeladaris/HashTrack/main/logo.png)
-</br> [Official Link](https://us-central1-hashtrackapi.cloudfunctions.net/app/)
+</br></br> [Official Link](https://us-central1-hashtrackapi.cloudfunctions.net/app/)
 
 ## What is it?
 
