@@ -55,7 +55,7 @@ function trackDriver(){
     db.collection('Events').doc(id.toString())
         .onSnapshot(doc => {
 
-            if(!doc.exists()) window.close();
+            if(!doc.exists) window.close();
 
             if(!doc.data().completed && doc.data().active){
                 driverMarker.setPosition(new google.maps.LatLng(doc.data().driver.latitude, doc.data().driver.longitude));

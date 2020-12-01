@@ -1,14 +1,29 @@
-window.onload = function() {
-    document.getElementById("start").style.visibility = "visible";
-    document.getElementById("stop").style.visibility = "hidden";
-}
-
 const db = firebase.firestore();
 const id = document.getElementById('id').innerHTML;
 const orderRef = db.collection('Events').doc(id.toString());
 var driverMarker;
 var map;
 var isActive = false;
+
+window.onload = function() {
+    document.getElementById("confirm").style.visibility = "hidden";
+    document.getElementById("cancel").style.visibility = "hidden";
+
+    orderRef.get().then((doc) => {
+        if(!doc.data().active){
+            document.getElementById("start").style.visibility = "visible";
+            document.getElementById("stop").style.visibility = "hidden";
+        }
+        else{
+            document.getElementById("start").style.visibility = "hidden";
+            document.getElementById("stop").style.visibility = "visible";
+        }
+        return;
+    }).catch((err) => {
+        console.error(err);
+        return;
+    });
+}
 
 function initMap(){
     var destIcon = {
@@ -87,6 +102,13 @@ function updatePos(position){
 }
 
 
+function ensure(){
+    document.getElementById("stop").style.visibility = "hidden";
+    document.getElementById("confirm").style.visibility = "visible";
+    document.getElementById("cancel").style.visibility = "visible";
+}
+
+
 function completeOrder(){
     isActive = false;
     document.getElementById("stop").style.visibility = "hidden";
@@ -99,4 +121,10 @@ function completeOrder(){
         console.error(er);
         return;
     })
+}
+
+function cancel(){
+    document.getElementById("stop").style.visibility = "visible";
+    document.getElementById("confirm").style.visibility = "hidden";
+    document.getElementById("cancel").style.visibility = "hidden";
 }

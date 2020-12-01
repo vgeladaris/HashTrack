@@ -44,64 +44,55 @@ app.get('/api/v1/track/:id/d', (req, res) => {
 })
 
 
-// Creating an event.
-app.post('/api/v1/create/:dest/:timeout', async (req, res, next) => {
+// Handle POST Requests.
+app.post('/api/v1/create/:dest', async (req, res, next) => {
     try {
         const dest = req.params.dest;
-        const time = parseInt(req.params.timeout);
 
-        if(time < 0){
+        // Request is valid, generate an ID and create a record for the database.
+        const id = makeId(8);
+        const docRef = db.collection('Events').doc(id);
+        let xhttp = new XMLHttpRequest();
 
-            // Request in invalid, respond with an error.
-            res.status(400).send('InvalidInput: timeout value cannot be negative!')
-        }
-        else{
+        // Send request get the client's address' coordinates.
+        xhttp.onreadystatechange = async function() {
 
-            // Request is valid, generate an ID and create a record for the database.
-            const id = makeId(8);
-            const docRef = db.collection('Events').doc(id);
-            let xhttp = new XMLHttpRequest();
+            if (this.readyState === 4 && this.status === 200) {
+                let response = JSON.parse(this.responseText);
 
-            // Send request get the client's address' coordinates.
-            xhttp.onreadystatechange = async function() {
+                let lat = response.results[0].geometry.location.lat;
+                let lng = response.results[0].geometry.location.lng;
 
-                if (this.readyState === 4 && this.status === 200) {
-                    let response = JSON.parse(this.responseText);
+                // Create record in the DB.
+                await docRef.set({
+                    destination: new admin.firestore.GeoPoint(lat, lng),
+                    driver: new admin.firestore.GeoPoint(0, 0),
+                    completed: false,
+                    active: false
+                });
 
-                    let lat = response.results[0].geometry.location.lat;
-                    let lng = response.results[0].geometry.location.lng;
+                const link = 'https://us-central1-hashtrackapi.cloudfunctions.net/app/api/v1/track/' + id
 
-                    // Create record in the DB.
-                    await docRef.set({
-                        destination: new admin.firestore.GeoPoint(lat, lng),
-                        driver: new admin.firestore.GeoPoint(0, 0),
-                        timeout: time,
-                        completed: false,
-                        active: false
-                    });
+                var json = {};
+                json.id = id;
+                json.clientUrl = link + '/c';
+                json.driverUrl = link + '/d';
+                res.json(json);
 
-                    const link = 'https://us-central1-hashtrackapi.cloudfunctions.net/app/api/v1/track/' + id
-
-                    var json = {};
-                    json.id = id;
-                    json.clientUrl = link + '/c';
-                    json.driverUrl = link + '/d';
-                    json.timeout = time;
-                    res.json(json);
-
-                    return;
-                }
+                return;
             }
-
-            xhttp.open("GET", geo.getURL(dest), true);
-            xhttp.send();
-            return;
         }
+
+        xhttp.open("GET", geo.getURL(dest), true);
+        xhttp.send();
+        return;
+
     } catch (e) {
         next(e);
         return;
     }
 })
+
 
 // Generate a random ID for each event.
 function makeId(length){

@@ -19,13 +19,11 @@ html, body, #map {
     position: absolute;
     background-color: #3db1b8;
     color: white;
-    border: 3px solid  #3db1b8;
-    border-radius: 3px;
+    border: none;
 }
 
 #start:active {
     background-color: #359196;
-    border: 3px solid #359196;
 }
 
 
@@ -40,11 +38,46 @@ html, body, #map {
     position: absolute;
     background-color: #55964C;
     color: white;
-    border: 3px solid #55964C;
-    border-radius: 3px;
+    border: none;
 }
 
 #stop:active {
     background-color: #498840;
-    border: 3px solid #498840;
+}
+
+#confirm {
+    font-size: 50px;
+    height: 150px;
+    width: 50%;
+    bottom: 0%;
+    font-weight: bold;
+    z-index: 10;
+    float: left;
+    position: absolute;
+    background-color: #55964C;
+    color: white;
+    border: none;
+}
+
+#confirm.active {
+    background-color: #498840;
+}
+
+#cancel {
+    font-size: 50px;
+    height: 150px;
+    margin-left: 50%;
+    width: 50%;
+    bottom: 0%;
+    font-weight: bold;
+    z-index: 10;
+    float: left;
+    position: absolute;
+    background-color: #d43535;
+    color: white;
+    border: none;
+}
+
+#cancel.active {
+    background-color: #ad2828;
 }
