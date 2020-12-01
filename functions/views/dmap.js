@@ -59,17 +59,16 @@ function activateOrder(){
     document.getElementById("start").style.visibility = "hidden";
     document.getElementById("stop").style.visibility = "visible";
 
+    if(navigator.geolocation){
+        //setInterval(navigator.geolocation.getCurrentPosition(updatePos, (error) => {console.error(error)}, {enableHighAccuracy: true}), 5000);
+        navigator.geolocation.watchPosition(updatePos, (error) => {console.error(error)}, {enableHighAccuracy: true});
+    }
+    else{
+        console.log("No Geolocation Support.")
+    }
 
     return orderRef.update({
         active: true
-    }).then(() => {
-        if(navigator.geolocation){
-            setInterval(navigator.geolocation.getCurrentPosition(updatePos, (error) => {console.error(error)}, {enableHighAccuracy: true}), 5000);
-        }
-        else{
-            console.log("No Geolocation Support.")
-        }
-        return;
     });
 }
 
@@ -92,8 +91,12 @@ function completeOrder(){
     isActive = false;
     document.getElementById("stop").style.visibility = "hidden";
 
-    return orderRef.update({
-        active: false,
-        completed: true
-    });
+    orderRef.delete().then(() => {
+        console.log("Order Deleted");
+        window.close();
+        return;
+    }).catch((er) => {
+        console.error(er);
+        return;
+    })
 }
