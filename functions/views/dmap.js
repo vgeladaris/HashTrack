@@ -1,13 +1,15 @@
 const db = firebase.firestore();
 const id = document.getElementById('id').innerHTML;
 const orderRef = db.collection('Events').doc(id.toString());
+
 var driverMarker;
 var map;
+var directionsDisplay;
+var directionsService;
 var isActive = false;
+var destPos;
 
 window.onload = function() {
-    document.getElementById("confirm").style.visibility = "hidden";
-    document.getElementById("cancel").style.visibility = "hidden";
 
     orderRef.get().then((doc) => {
         if(!doc.data().active){
@@ -17,6 +19,7 @@ window.onload = function() {
         else{
             document.getElementById("start").style.visibility = "hidden";
             document.getElementById("stop").style.visibility = "visible";
+            activateOrder();
         }
         return;
     }).catch((err) => {
@@ -26,6 +29,9 @@ window.onload = function() {
 }
 
 function initMap(){
+    directionsDisplay = new google.maps.DirectionsRenderer();
+    directionsService = new google.maps.DirectionsService();
+
     var destIcon = {
         url: "https://cdn3.iconfinder.com/data/icons/real-estate-20/512/1-33-512.png",
         scaledSize: new google.maps.Size(100, 100)
@@ -38,7 +44,7 @@ function initMap(){
 
     orderRef.get().then(doc => {
 
-        const destPos = {
+        destPos = {
             lat: doc.data().destination.latitude,
             lng: doc.data().destination.longitude
         }
@@ -47,6 +53,8 @@ function initMap(){
             zoom: 15,
             center: destPos,
         });
+
+        directionsDisplay.setMap(map);
 
         const destMarker = new google.maps.Marker({
             position: destPos,
@@ -75,11 +83,10 @@ function activateOrder(){
     document.getElementById("stop").style.visibility = "visible";
 
     if(navigator.geolocation){
-        //setInterval(navigator.geolocation.getCurrentPosition(updatePos, (error) => {console.error(error)}, {enableHighAccuracy: true}), 5000);
         navigator.geolocation.watchPosition(updatePos, (error) => {console.error(error)}, {enableHighAccuracy: true});
     }
     else{
-        console.log("No Geolocation Support.")
+        console.err("No Geolocation Support.")
     }
 
     return orderRef.update({
@@ -95,7 +102,21 @@ function updatePos(position){
         driver: new firebase.firestore.GeoPoint(position.coords.latitude, position.coords.longitude)
     }).then(() => {
         driverMarker.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
-        driverMarker.setMap(map);
+
+        var request = {
+            origin: new google.maps.LatLng(driverMarker.getPosition().lat(), driverMarker.getPosition().lng()),
+            destination: new google.maps.LatLng(destPos.lat, destPos.lng),
+            travelMode: google.maps.TravelMode.DRIVING
+        };
+        directionsService.route(request, (response, status) => {
+            if (status === google.maps.DirectionsStatus.OK) {
+                directionsDisplay.setDirections(response);
+                directionsDisplay.setMap(map);
+                driverMarker.setMap(map);
+            } else {
+                console.err("Directions Request failed: " + status);
+            }
+        });
 
         return;
     });

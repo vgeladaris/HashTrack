@@ -15,7 +15,7 @@ The two key features are:
 
 ## How does it work?
 ### Request
-With every new order about to get delivered, you can send an HTTP POST request to the API with the following format:
+With every new order about to get delivered, you can send an HTTP GET request to the API with the following format:
 
 ```
 https://us-central1-hashtrackapi.cloudfunctions.net/app/api/v1/create/destination
@@ -40,6 +40,7 @@ JSON Response for the example values above:
 ```
 
 ### Notes
-* The client's link can be used by multiple devices.
+* The driver's device must have location services turned on.
 * The driver's link must only be used by his device only.
+* The client's link can be used by multiple devices.
 * The link should not be closed at any point during delivery.

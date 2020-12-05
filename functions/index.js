@@ -7,17 +7,11 @@ const app = express();
 
 
 // Setting server/firebase attributes.
-//const PORT = process.env.PORT || 3000;
 const PORT = 3000;
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const admin = require("firebase-admin");
-//const serviceAccount = require("/home/masterofreality/serviceAccountKey.json");
 
 admin.initializeApp();
-    //{
-    //credential: admin.credential.applicationDefault(),
-    //databaseURL: "https://hashtrackapi.firebaseio.com"
-//}
 
 const db = admin.firestore();
 
@@ -45,7 +39,7 @@ app.get('/api/v1/track/:id/d', (req, res) => {
 
 
 // Handle POST Requests.
-app.post('/api/v1/create/:dest', async (req, res, next) => {
+app.get('/api/v1/create/:dest', async (req, res, next) => {
     try {
         const dest = req.params.dest;
 

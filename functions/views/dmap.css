@@ -9,6 +9,7 @@ html, body, #map {
 }
 
 #start {
+    visibility: hidden;
     font-size: 50px;
     height: 150px;
     width: 100%;
@@ -28,6 +29,7 @@ html, body, #map {
 
 
 #stop {
+    visibility: hidden;
     font-size: 50px;
     height: 150px;
     width: 100%;
@@ -46,6 +48,7 @@ html, body, #map {
 }
 
 #confirm {
+    visibility: hidden;
     font-size: 50px;
     height: 150px;
     width: 50%;
@@ -64,6 +67,7 @@ html, body, #map {
 }
 
 #cancel {
+    visibility: hidden;
     font-size: 50px;
     height: 150px;
     margin-left: 50%;
