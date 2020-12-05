@@ -2,6 +2,7 @@ html, body, #map {
     margin: 0;
     height: 100%;
     width: 100%;
+    font-family:'Courier New';
 }
 
 #id {
@@ -84,4 +85,16 @@ html, body, #map {
 
 #cancel.active {
     background-color: #ad2828;
+}
+
+#credit {
+    color: #303030;
+    padding-top: 1%;
+    font-size: 20px;
+    position: fixed;
+    top: 0;
+    text-align: center;
+    width: 20%;
+    margin-left: 40%;
+    margin-right: 40%;
 }

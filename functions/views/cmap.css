@@ -8,3 +8,15 @@ html, body, #map {
 #id {
     display: none;
 }
+
+#credit {
+    color: #303030;
+    padding-top: 1%;
+    font-size: 15px;
+    position: fixed;
+    top: 0;
+    text-align: center;
+    width: 20%;
+    margin-left: 40%;
+    margin-right: 40%;
+}
