@@ -5,9 +5,11 @@ html, body, #map {
     font-family:'Courier New';
 }
 
+
 #id {
     display: none;
 }
+
 
 #start {
     visibility: hidden;
@@ -23,6 +25,7 @@ html, body, #map {
     color: white;
     border: none;
 }
+
 
 #start:active {
     background-color: #359196;
@@ -44,9 +47,11 @@ html, body, #map {
     border: none;
 }
 
+
 #stop:active {
     background-color: #498840;
 }
+
 
 #confirm {
     visibility: hidden;
@@ -63,9 +68,11 @@ html, body, #map {
     border: none;
 }
 
+
 #confirm.active {
     background-color: #498840;
 }
+
 
 #cancel {
     visibility: hidden;
@@ -83,18 +90,54 @@ html, body, #map {
     border: none;
 }
 
+
 #cancel.active {
     background-color: #ad2828;
 }
 
+
+#start_alert {
+    visibility: hidden;
+    font-size: 50px;
+    height: 150px;
+    margin-left: 0%;
+    width: 100%;
+    top: 0%;
+    font-weight: bold;
+    z-index: 10;
+    float: left;
+    position: absolute;
+    background-color: #d43535;
+    color: white;
+    border: none;
+}
+
+
+#stop_alert {
+    visibility: hidden;
+    font-size: 50px;
+    height: 150px;
+    margin-left: 0%;
+    width: 100%;
+    top: 0%;
+    font-weight: bold;
+    z-index: 10;
+    float: left;
+    position: absolute;
+    background-color: #ab2020;
+    color: white;
+    border: none;
+}
+
+
 #credit {
     color: #303030;
     padding-top: 1%;
-    font-size: 20px;
+    font-size: 35px;
     position: fixed;
-    top: 0;
+    top: 0px;
     text-align: center;
-    width: 20%;
-    margin-left: 40%;
-    margin-right: 40%;
+    width: 50%;
+    margin-left: 25%;
+    margin-right: 25%;
 }

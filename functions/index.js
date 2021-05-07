@@ -38,7 +38,7 @@ app.get('/api/v1/track/:id/d', (req, res) => {
 })
 
 
-// Handle POST Requests.
+// Handle GET Requests.
 app.get('/api/v1/create/:dest', async (req, res, next) => {
     try {
         const dest = req.params.dest;
@@ -62,7 +62,8 @@ app.get('/api/v1/create/:dest', async (req, res, next) => {
                     destination: new admin.firestore.GeoPoint(lat, lng),
                     driver: new admin.firestore.GeoPoint(0, 0),
                     completed: false,
-                    active: false
+                    active: false,
+                    alerting: false
                 });
 
                 const link = 'https://us-central1-hashtrackapi.cloudfunctions.net/app/api/v1/track/' + id

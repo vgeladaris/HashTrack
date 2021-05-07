@@ -7,6 +7,7 @@ var map;
 var directionsDisplay;
 var directionsService;
 var isActive = false;
+var isAlerting = false;
 var destPos;
 
 window.onload = function() {
@@ -33,12 +34,12 @@ function initMap(){
     directionsService = new google.maps.DirectionsService();
 
     var destIcon = {
-        url: "https://cdn3.iconfinder.com/data/icons/real-estate-20/512/1-33-512.png",
+        url: "https://raw.githubusercontent.com/VasileiosGeladaris/HashTrack/main/dest.png",
         scaledSize: new google.maps.Size(100, 100)
     };
 
     var driverIcon = {
-        url: "https://images.vexels.com/media/users/3/199964/isolated/preview/ae782cab8ae7e722febb5869c09574cc-happy-delivery-boy-character-by-vexels.png",
+        url: "https://raw.githubusercontent.com/VasileiosGeladaris/HashTrack/main/driver.png",
         scaledSize: new google.maps.Size(100, 100)
     };
 
@@ -81,6 +82,8 @@ function activateOrder(){
     isActive = true;
     document.getElementById("start").style.visibility = "hidden";
     document.getElementById("stop").style.visibility = "visible";
+    document.getElementById("start_alert").style.visibility = "visible";
+    document.getElementById("credit").style.top = "125px";
 
     if(navigator.geolocation){
         navigator.geolocation.watchPosition(updatePos, (error) => {console.error(error)}, {enableHighAccuracy: true});
@@ -133,6 +136,8 @@ function ensure(){
 function completeOrder(){
     isActive = false;
     document.getElementById("stop").style.visibility = "hidden";
+    document.getElementById("start_alert").style.visibility = "hidden";
+    document.getElementById("stop_alert").style.visibility = "hidden";
 
     orderRef.delete().then(() => {
         console.log("Order Deleted");
@@ -148,4 +153,24 @@ function cancel(){
     document.getElementById("stop").style.visibility = "visible";
     document.getElementById("confirm").style.visibility = "hidden";
     document.getElementById("cancel").style.visibility = "hidden";
+}
+
+function startAlert() {
+    isAlerting = true;
+    document.getElementById("start_alert").style.visibility = "hidden";
+    document.getElementById("stop_alert").style.visibility = "visible";
+
+    return orderRef.update({
+        alerting: true
+    });
+}
+
+function stopAlert() {
+    isAlerting = false;
+    document.getElementById("start_alert").style.visibility = "visible";
+    document.getElementById("stop_alert").style.visibility = "hidden";
+
+    return orderRef.update({
+        alerting: false
+    });
 }
