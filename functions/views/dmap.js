@@ -21,6 +21,11 @@ window.onload = function() {
             document.getElementById("start").style.visibility = "hidden";
             document.getElementById("stop").style.visibility = "visible";
             activateOrder();
+            if(doc.data().alerting) {
+                isAlerting = true;
+                document.getElementById("start_alert").style.visibility = "hidden";
+                document.getElementById("stop_alert").style.visibility = "visible";
+            }
         }
         return;
     }).catch((err) => {
@@ -35,7 +40,7 @@ function initMap(){
 
     var destIcon = {
         url: "https://raw.githubusercontent.com/VasileiosGeladaris/HashTrack/main/dest.png",
-        scaledSize: new google.maps.Size(100, 100)
+        scaledSize: new google.maps.Size(73, 100)
     };
 
     var driverIcon = {
@@ -83,7 +88,7 @@ function activateOrder(){
     document.getElementById("start").style.visibility = "hidden";
     document.getElementById("stop").style.visibility = "visible";
     document.getElementById("start_alert").style.visibility = "visible";
-    document.getElementById("credit").style.top = "125px";
+    document.getElementById("credit").style.top = "155px";
 
     if(navigator.geolocation){
         navigator.geolocation.watchPosition(updatePos, (error) => {console.error(error)}, {enableHighAccuracy: true});

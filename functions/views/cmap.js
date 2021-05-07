@@ -4,15 +4,17 @@ const id = document.getElementById('id').innerHTML;
 var map;
 var driverMarker;
 function initMap(){
+
     var destIcon = {
-        url: "https://cdn3.iconfinder.com/data/icons/real-estate-20/512/1-33-512.png",
-        scaledSize: new google.maps.Size(60, 60)
+        url: "https://raw.githubusercontent.com/VasileiosGeladaris/HashTrack/main/dest.png",
+        scaledSize: new google.maps.Size(73, 100)
     };
 
     var driverIcon = {
-        url: "https://images.vexels.com/media/users/3/199964/isolated/preview/ae782cab8ae7e722febb5869c09574cc-happy-delivery-boy-character-by-vexels.png",
-        scaledSize: new google.maps.Size(70, 70)
+        url: "https://raw.githubusercontent.com/VasileiosGeladaris/HashTrack/main/driver.png",
+        scaledSize: new google.maps.Size(100, 100)
     };
+
 
     db.collection('Events').doc(id.toString())
         .get().then(doc => {
@@ -60,7 +62,10 @@ function trackDriver(){
                 driverMarker.setMap(map);
 
                 if(doc.data().alerting) {
-                    console.log("ALERTING");
+                    document.getElementById("alert").style.visibility = "visible";
+                }
+                else {
+                    document.getElementById("alert").style.visibility = "hidden";
                 }
             }
             else {

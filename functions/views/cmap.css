@@ -9,6 +9,7 @@ html, body, #map {
     display: none;
 }
 
+
 #credit {
     color: #303030;
     padding-top: 1%;
@@ -19,4 +20,21 @@ html, body, #map {
     width: 20%;
     margin-left: 40%;
     margin-right: 40%;
+}
+
+
+#alert {
+    font-weight: bold;
+    background-color: #d43535;
+    padding: 10px;
+    border-radius: 5px;
+    visibility: hidden;
+    color: #ffffff;
+    font-size: 40px;
+    position: fixed;
+    top: 55px;
+    text-align: center;
+    width: 60%;
+    margin-left: 20%;
+    margin-right: 20%;
 }
